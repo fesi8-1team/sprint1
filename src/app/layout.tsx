@@ -32,7 +32,7 @@ export default function RootLayout({
       >
         <ReduxProvider>
           <TanstackProviders>
-            <div className={`mx-auto max-w-7xl bg-orange-500`}>{children}</div>
+            <div>{children}</div>
           </TanstackProviders>
         </ReduxProvider>
       </body>
