@@ -1,5 +1,5 @@
 import Greet from "@/app/auth/Greet";
-import LoginForm from "@/app/auth/RegisterForm";
+import LoginForm from "@/app/auth/LoginForm";
 
 export default function LoginPage() {
   return (
@@ -12,7 +12,7 @@ export default function LoginPage() {
           <Greet />
         </section>
         {/*회원가입 폼 랜더*/}
-        <section className={`p-4 lg:flex-1`}>
+        <section className={`p-4 lg:min-h-[600px] lg:flex-1`}>
           <LoginForm />
         </section>
       </div>

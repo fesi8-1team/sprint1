@@ -17,6 +17,7 @@ import { z } from "zod";
 import { Eye, EyeClosed } from "lucide-react";
 import { useState } from "react";
 import { loginSchema } from "@/schema/LoginSchema";
+import Link from "next/link";
 
 export default function LoginForm() {
   const form = useForm<z.infer<typeof loginSchema>>({
@@ -46,22 +47,28 @@ export default function LoginForm() {
   };
   return (
     <div className="mx-auto max-w-md rounded-md bg-white p-6 shadow-md">
-      <h2 className="mb-3 text-2xl font-bold">로그인</h2>
+      <h2 className="mb-8 text-2xl font-bold">로그인</h2>
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
           {/* 아이디 */}
           <FormField
             control={form.control}
             name="email"
-            render={({ field }) => (
+            render={({ field, fieldState }) => (
               <FormItem>
                 <div className={"flex justify-between"}>
-                  <FormLabel>아이디</FormLabel> <FormMessage />
+                  <FormLabel>아이디</FormLabel>{" "}
+                  {fieldState.error ? (
+                    <FormMessage className={`text-xs`} />
+                  ) : (
+                    <FormDescription className={`text-xs`}>
+                      유효한 이메일을 입력해 주세요
+                    </FormDescription>
+                  )}
                 </div>
                 <FormControl>
                   <Input placeholder="example@dummy.com" {...field} />
                 </FormControl>
-                <FormDescription>유효한 이메일을 입력해 주세요</FormDescription>
               </FormItem>
             )}
           />
@@ -94,8 +101,15 @@ export default function LoginForm() {
               </FormItem>
             )}
           />
-
-          <Button type="submit">Submit</Button>
+          <div className="flex items-center justify-between">
+            <p className={`text-sm font-thin text-neutral-700`}>
+              계정이 아직 없으신가요 ?
+              <Link href={"/auth/register"} className={`ml-3 text-indigo-600`}>
+                10초 회원가입
+              </Link>
+            </p>{" "}
+            <Button type="submit">Log in</Button>
+          </div>
         </form>
       </Form>
     </div>

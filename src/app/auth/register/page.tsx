@@ -12,7 +12,7 @@ export default function RegisterPage() {
           <Greet />
         </section>
         {/*회원가입 폼 랜더*/}
-        <section className={`p-4 lg:flex-1`}>
+        <section className={`p-4 lg:min-h-[600px] lg:flex-1`}>
           <RegisterForm />
         </section>
       </div>

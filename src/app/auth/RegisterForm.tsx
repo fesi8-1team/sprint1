@@ -16,6 +16,7 @@ import { Button } from "@/components/ui/button";
 import { z } from "zod";
 import { Eye, EyeClosed } from "lucide-react";
 import { useState } from "react";
+import Link from "next/link";
 
 export default function RegisterForm() {
   const form = useForm<z.infer<typeof registerSchema>>({
@@ -35,9 +36,9 @@ export default function RegisterForm() {
   };
   return (
     <div className="mx-auto max-w-md rounded-md bg-white p-6 shadow-md">
-      <h2 className="mb-3 text-2xl font-bold">회원가입</h2>
+      <h2 className="mb-4 text-2xl font-bold">회원가입</h2>
       <Form {...form}>
-        <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
+        <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
           {/* 이름 */}
           <FormField
             control={form.control}
@@ -45,7 +46,8 @@ export default function RegisterForm() {
             render={({ field }) => (
               <FormItem>
                 <div className={"flex justify-between"}>
-                  <FormLabel>이름</FormLabel> <FormMessage />
+                  <FormLabel>이름</FormLabel>{" "}
+                  {<FormMessage className={`text-xs`} />}
                 </div>
                 <FormControl>
                   <Input placeholder="이름을 입력해 주세요" {...field} />
@@ -58,15 +60,21 @@ export default function RegisterForm() {
           <FormField
             control={form.control}
             name="email"
-            render={({ field }) => (
+            render={({ field, fieldState }) => (
               <FormItem>
                 <div className={"flex justify-between"}>
-                  <FormLabel>아이디</FormLabel> <FormMessage />
+                  <FormLabel>아이디</FormLabel>
+                  {fieldState.error ? (
+                    <FormMessage className={`text-xs`} />
+                  ) : (
+                    <FormDescription className={`text-xs`}>
+                      이메일 형식으로 입력해 주세요.
+                    </FormDescription>
+                  )}
                 </div>
                 <FormControl>
                   <Input placeholder="example@dummy.com" {...field} />
                 </FormControl>
-                <FormDescription>유효한 이메일을 입력해 주세요</FormDescription>
               </FormItem>
             )}
           />
@@ -75,15 +83,21 @@ export default function RegisterForm() {
           <FormField
             control={form.control}
             name="company"
-            render={({ field }) => (
+            render={({ field, fieldState }) => (
               <FormItem>
                 <div className={"flex justify-between"}>
-                  <FormLabel>회사명</FormLabel> <FormMessage />
+                  <FormLabel>회사명</FormLabel>{" "}
+                  {fieldState.error ? (
+                    <FormMessage className={`text-xs`} />
+                  ) : (
+                    <FormDescription className={`text-xs`}>
+                      소속 회사명을 입력하세요.
+                    </FormDescription>
+                  )}
                 </div>
                 <FormControl>
-                  <Input placeholder="회사명을 입력해 주세요" {...field} />
+                  <Input placeholder="삼성 전자" {...field} />
                 </FormControl>
-                <FormDescription>소속 회사명을 입력하세요.</FormDescription>
               </FormItem>
             )}
           />
@@ -92,10 +106,17 @@ export default function RegisterForm() {
           <FormField
             control={form.control}
             name="password"
-            render={({ field }) => (
+            render={({ field, fieldState }) => (
               <FormItem>
                 <div className={"flex justify-between"}>
-                  <FormLabel>비밀번호</FormLabel> <FormMessage />
+                  <FormLabel>비밀번호</FormLabel>{" "}
+                  {fieldState.error ? (
+                    <FormMessage className={`text-xs`} />
+                  ) : (
+                    <FormDescription className={`text-xs`}>
+                      비밀번호는 6자 이상, 특수문자를 포함해 주세요
+                    </FormDescription>
+                  )}
                 </div>
                 <div className="relative">
                   <FormControl>
@@ -113,9 +134,6 @@ export default function RegisterForm() {
                     {showPassword ? <EyeClosed /> : <Eye />}
                   </button>
                 </div>
-                <FormDescription>
-                  비밀번호는 6자 이상이어야 합니다.
-                </FormDescription>
               </FormItem>
             )}
           />
@@ -124,10 +142,17 @@ export default function RegisterForm() {
           <FormField
             control={form.control}
             name="passwordConfirm"
-            render={({ field }) => (
+            render={({ field, fieldState }) => (
               <FormItem>
                 <div className={"flex justify-between"}>
-                  <FormLabel>비밀번호 확인</FormLabel> <FormMessage />
+                  <FormLabel>비밀번호 확인</FormLabel>{" "}
+                  {fieldState.error ? (
+                    <FormMessage className={`text-xs`} />
+                  ) : (
+                    <FormDescription className={`text-xs`}>
+                      동일한 비밀번호를 입력하세요.
+                    </FormDescription>
+                  )}
                 </div>
                 <div className="relative">
                   <FormControl>
@@ -145,12 +170,18 @@ export default function RegisterForm() {
                     {showConfirmPassword ? <EyeClosed /> : <Eye />}
                   </button>
                 </div>
-                <FormDescription>동일한 비밀번호를 입력하세요.</FormDescription>
               </FormItem>
             )}
           />
-
-          <Button type="submit">Submit</Button>
+          <div className={`flex justify-between`}>
+            <p className={`text-sm font-thin text-neutral-700`}>
+              계정이 있으신가요 ?{" "}
+              <Link href={"/auth/login"} className={`text-indigo-600`}>
+                로그인
+              </Link>
+            </p>{" "}
+            <Button type="submit">Sign up</Button>
+          </div>
         </form>
       </Form>
     </div>
