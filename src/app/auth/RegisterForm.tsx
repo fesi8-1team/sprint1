@@ -22,6 +22,10 @@ export default function RegisterForm() {
     resolver: zodResolver(registerSchema),
     defaultValues: {
       username: "",
+      email: "",
+      company: "",
+      password: "",
+      passwordConfirm: "",
     },
   });
   const [showPassword, setShowPassword] = useState(false);
