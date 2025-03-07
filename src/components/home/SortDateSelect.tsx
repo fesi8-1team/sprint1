@@ -10,7 +10,7 @@ import {
 
 export default function SortDateSelect() {
   return (
-    <>
+    <div className="ml-auto">
       <Select>
         <SelectTrigger className="w-auto">
           <SelectValue placeholder="정렬" />
@@ -22,6 +22,6 @@ export default function SortDateSelect() {
           </SelectGroup>
         </SelectContent>
       </Select>
-    </>
+    </div>
   );
 }
