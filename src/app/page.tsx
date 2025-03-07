@@ -2,7 +2,8 @@ import HomeInfiniteScroll from "@/components/home/HomeInfiniteScroll";
 import RegionSelect from "@/components/home/RegionSelect";
 import DateSelect from "@/components/home/DateSelect";
 import SortDateSelect from "@/components/home/SortDateSelect";
-import { Button } from "@/components/ui/button";
+
+import { AddGroupButtonModal } from "@/components/home/AddGroupButtonModal";
 
 export default function Home() {
   return (
@@ -13,10 +14,7 @@ export default function Home() {
             <h1>지금 모임에 참여하세요!</h1>
           </div>
           <div className="relative flex h-20 w-full items-center bg-green-200">
-            <Button className="ml-auto">모임 만들기</Button>
-            <div className="fixed inset-0 z-10 flex items-center justify-center bg-black/30">
-              <div className="z-20 h-1/2 w-1/2 bg-white"></div>
-            </div>
+            <AddGroupButtonModal />
           </div>
         </div>
         <div className="flex h-14 items-center gap-2">
