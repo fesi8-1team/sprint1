@@ -10,7 +10,7 @@ export default function ThemeToggler({ colorTheme }: { colorTheme: boolean }) {
 
   // 현재 테마 상태 확인
   useEffect(() => {
-    // body의 클래스를 확인해서 현재 테마 상태 가져오기
+    // html 태그의 클래스를 확인해서 현재 테마 상태 가져오기
     const isDarkMode = document.documentElement.classList.contains("dark");
     setIsDark(isDarkMode);
   }, []);
@@ -19,7 +19,7 @@ export default function ThemeToggler({ colorTheme }: { colorTheme: boolean }) {
     const newMode = !isDark;
     setIsDark(newMode);
 
-    // body의 클래스 토글
+    // html 태그의 클래스 토글
     if (newMode) {
       // 다크모드로 변경
       document.documentElement.classList.add("dark");
@@ -30,7 +30,7 @@ export default function ThemeToggler({ colorTheme }: { colorTheme: boolean }) {
       document.cookie = "mode=light; path=/; max-age=31536000";
     }
   };
-
+  // todo: 디자인 결정시 변경 해야함
   return (
     <div className="flex items-center gap-2 transition-colors">
       <span className="text-md font-bold">Theme</span>
