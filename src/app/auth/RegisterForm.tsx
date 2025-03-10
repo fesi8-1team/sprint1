@@ -35,7 +35,7 @@ export default function RegisterForm() {
     console.log("Submitted values:", values);
   };
   return (
-    <div className="mx-auto max-w-md rounded-md bg-white p-6 shadow-md">
+    <div className="mx-auto max-w-md rounded-md bg-white p-6 shadow-md dark:bg-neutral-900">
       <h2 className="mb-4 text-2xl font-bold">회원가입</h2>
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
