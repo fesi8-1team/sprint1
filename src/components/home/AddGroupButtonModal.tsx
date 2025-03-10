@@ -8,18 +8,48 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
-import { Button } from "@/components/ui/button";
+import {
+  Form,
+  FormControl,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+} from "@/components/ui/form";
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from "@/components/ui/popover";
 import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import { useState } from "react";
+import { Button } from "@/components/ui/button";
+import { Calendar } from "@/components/ui/calendar";
+
+import { format } from "date-fns";
+
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import * as z from "zod";
+
+const formSchema = z.object({
+  groupName: z.string().min(1, "모임 이름을 입력해주세요"),
+  groupLocation: z.string().min(1, "장소를 선택해주세요"),
+  groupHeadcount: z.string().min(1, "모집 정원을 입력해주세요"),
+  startDate: z.date(),
+  endDate: z.date(),
+});
 
 export function AddGroupButtonModal() {
-  let [groupName, setGroupName] = useState("");
-  let [groupLocation, setGroupLocation] = useState("");
-  let [groupImage, setGroupImage] = useState("");
-  let [groupHeadcount, setGroupHeadcount] = useState("");
+  const form = useForm({
+    resolver: zodResolver(formSchema),
+    defaultValues: {
+      groupName: "",
+      groupLocation: "",
+      groupHeadcount: "",
+    },
+  });
 
-  const handleSubmit = function () {};
+  function onSubmit() {}
 
   return (
     <Dialog>
@@ -32,93 +62,124 @@ export function AddGroupButtonModal() {
         <DialogHeader>
           <DialogTitle>모임 만들기</DialogTitle>
         </DialogHeader>
-        <form onSubmit={handleSubmit}>
-          <div className="flex w-full flex-col gap-4">
-            <div>
-              <Label htmlFor="groupName" className="mb-2">
-                모임 이름
-              </Label>
-              <Input
-                id="name"
-                value={groupName}
-                onChange={(e) => {
-                  setGroupName(e.currentTarget.value);
-                }}
-                className="w-full"
-                placeholder="모임 이름을 작성해주세요."
-              />
-            </div>
+        <Form {...form}>
+          <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
+            <FormField
+              control={form.control}
+              name="groupName"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>모임 이름</FormLabel>
+                  <FormControl>
+                    <Input placeholder="모임 이름을 작성해주세요" {...field} />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
 
-            <div>
-              <Label htmlFor="groupName" className="mb-2">
-                장소
-              </Label>
-              <Input
-                id="location"
-                type="select"
-                value={groupLocation}
-                onChange={(e) => {
-                  setGroupLocation(e.currentTarget.value);
-                }}
-                className="w-full"
-                placeholder="장소를 선택해주세요."
-              />
-            </div>
+            <FormField
+              control={form.control}
+              name="groupLocation"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>장소</FormLabel>
+                  <FormControl>
+                    <Input placeholder="장소를 입력해주세요." {...field} />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
 
-            <div>
-              <Label htmlFor="groupName" className="mb-2">
-                이미지
-              </Label>
-              <div className="flex flex-row gap-4">
-                <Input
-                  id="fileName"
-                  value={groupImage}
-                  placeholder="이미지를 첨부해주세요."
-                  className="w-3/4"
-                  readOnly
-                />
-                <div className="relative w-1/4">
-                  <Input
-                    id="fileInput"
-                    type="file"
-                    onChange={(e) => {
-                      setGroupImage(e.currentTarget.value);
-                    }}
-                    className="absolute inset-0 w-full cursor-pointer opacity-0"
-                    accept="image/*"
-                  />
-                  <Button type="button" className="w-full">
-                    파일 선택
-                  </Button>
-                </div>
-              </div>
-            </div>
-            <div>
-              <Label htmlFor="headCount" className="mb-2">
-                모집 정원
-              </Label>
-              <Input
-                id="headCount"
-                value={groupHeadcount}
-                type="number"
-                onChange={(e) => {
-                  setGroupHeadcount(e.currentTarget.value);
-                }}
-                className="w-full [appearance:textfield] [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:appearance-none"
-                placeholder="최소 5인 이상 입력해주세요"
-              />
-            </div>
-          </div>
-          <DialogFooter>
-            <Button
-              onClick={() => {
-                handleSubmit();
-              }}
-            >
-              Save changes
-            </Button>
-          </DialogFooter>
-        </form>
+            <FormField
+              control={form.control}
+              name="groupHeadcount"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>모집 정원</FormLabel>
+                  <FormControl>
+                    <Input
+                      type="number"
+                      placeholder="최소 5인 이상 입력해주세요"
+                      {...field}
+                      className="[appearance:textfield] [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:appearance-none"
+                    />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+
+            <FormField
+              control={form.control}
+              name="startDate"
+              render={({ field }) => (
+                <FormItem className="flex w-1/2 flex-col">
+                  <FormLabel>모임 날짜</FormLabel>
+                  <Popover>
+                    <PopoverTrigger asChild>
+                      <FormControl>
+                        <Button>
+                          {field.value ? (
+                            format(field.value, "yyyy년 M월 d일")
+                          ) : (
+                            <span>Pick a date</span>
+                          )}
+                        </Button>
+                      </FormControl>
+                    </PopoverTrigger>
+                    <PopoverContent className="w-auto p-0" align="start">
+                      <Calendar
+                        mode="single"
+                        selected={field.value}
+                        onSelect={field.onChange}
+                      />
+                    </PopoverContent>
+                  </Popover>
+
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+
+            <FormField
+              control={form.control}
+              name="endDate"
+              render={({ field }) => (
+                <FormItem className="flex w-1/2 flex-col">
+                  <FormLabel>마감 날짜</FormLabel>
+                  <Popover>
+                    <PopoverTrigger asChild>
+                      <FormControl>
+                        <Button>
+                          {field.value ? (
+                            format(field.value, "yyyy년 M월 d일")
+                          ) : (
+                            <span>Pick a date</span>
+                          )}
+                        </Button>
+                      </FormControl>
+                    </PopoverTrigger>
+                    <PopoverContent className="w-auto p-0" align="start">
+                      <Calendar
+                        mode="single"
+                        selected={field.value}
+                        onSelect={field.onChange}
+                      />
+                    </PopoverContent>
+                  </Popover>
+
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+
+            <DialogFooter>
+              <Button type="submit">저장하기</Button>
+            </DialogFooter>
+          </form>
+        </Form>
       </DialogContent>
     </Dialog>
   );
