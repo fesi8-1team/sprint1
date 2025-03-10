@@ -46,7 +46,7 @@ export default function LoginForm() {
     }
   };
   return (
-    <div className="mx-auto max-w-md rounded-md bg-white p-6 shadow-md">
+    <div className="mx-auto max-w-md rounded-md bg-white p-6 shadow-md dark:bg-neutral-900">
       <h2 className="mb-8 text-2xl font-bold">로그인</h2>
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
