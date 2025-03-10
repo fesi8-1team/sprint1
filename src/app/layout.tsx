@@ -43,7 +43,7 @@ export default async function RootLayout({
             <div
               className={`mx-auto max-w-7xl bg-orange-500 dark:bg-orange-900`}
             >
-              <ThemeToggler />
+              <ThemeToggler colorTheme={isDarkMode} />
               {children}
             </div>
           </TanstackProviders>

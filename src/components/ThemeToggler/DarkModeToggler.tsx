@@ -4,8 +4,9 @@ import { useState, useEffect } from "react";
 import { Moon, Sun } from "lucide-react";
 import { cn } from "@/lib/utils";
 
-export default function ThemeToggler() {
-  const [isDark, setIsDark] = useState(true);
+export default function ThemeToggler({ colorTheme }: { colorTheme: boolean }) {
+  // 서버에서 받은 초기 값으로 설정
+  const [isDark, setIsDark] = useState(colorTheme);
 
   // 현재 테마 상태 확인
   useEffect(() => {
@@ -24,7 +25,7 @@ export default function ThemeToggler() {
       document.documentElement.classList.add("dark");
       document.cookie = "mode=dark; path=/; max-age=31536000";
     } else {
-      // 라이트모드로 변경
+      // 라이트모드로 변경 (dark 제거)
       document.documentElement.classList.remove("dark");
       document.cookie = "mode=light; path=/; max-age=31536000";
     }
