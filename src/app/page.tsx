@@ -7,7 +7,7 @@ import { AddGroupButtonModal } from "@/components/home/AddGroupButtonModal";
 
 export default function Home() {
   return (
-    <div className="max-h-auto min-h-screen w-screen bg-amber-300">
+    <div className="max-h-auto min-h-screen bg-amber-300">
       <section className="m-auto max-h-auto min-h-screen max-w-7xl bg-amber-200 px-24 py-8">
         <div className="h-auto w-full bg-gray-300">
           <div className="flex h-20 w-full items-center justify-center bg-blue-400">
