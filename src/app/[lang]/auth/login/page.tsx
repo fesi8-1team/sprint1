@@ -1,5 +1,5 @@
-import Greet from "@/app/auth/Greet";
-import LoginForm from "@/app/auth/LoginForm";
+import LoginForm from "@/app/[lang]/auth/LoginForm";
+import Greet from "@/app/[lang]/auth/Greet";
 
 export default function LoginPage() {
   return (
