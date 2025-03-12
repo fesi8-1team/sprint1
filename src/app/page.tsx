@@ -1,4 +1,4 @@
-import HomeInfiniteScroll from "@/components/home/HomeInfiniteScroll";
+import InfiniteScroll from "@/components/home/InfiniteScroll";
 import RegionSelect from "@/components/home/RegionSelect";
 import DateSelect from "@/components/home/DateSelect";
 import SortDateSelect from "@/components/home/SortDateSelect";
@@ -22,7 +22,7 @@ export default function Home() {
           <DateSelect />
           <SortDateSelect />
         </div>
-        <HomeInfiniteScroll />
+        <InfiniteScroll />
       </section>
     </div>
   );
