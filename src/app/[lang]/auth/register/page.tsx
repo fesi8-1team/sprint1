@@ -1,5 +1,5 @@
-import Greet from "@/app/auth/Greet";
-import RegisterForm from "@/app/auth/RegisterForm";
+import Greet from "@/app/[lang]/auth/Greet";
+import RegisterForm from "@/app/[lang]/auth/RegisterForm";
 
 export default function RegisterPage() {
   return (
