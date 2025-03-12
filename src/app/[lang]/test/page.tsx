@@ -1,4 +1,11 @@
-export default function TestPage({ params }: { params: { lang: string } }) {
+type Params = { lang: string };
+interface TestPageProps {
+  params: Promise<Params>;
+}
+
+export default async function TestPage({ params }: TestPageProps) {
+  const { lang } = await params;
+
   // 간단한 번역 데이터
   const translations = {
     ko: {
@@ -16,9 +23,9 @@ export default function TestPage({ params }: { params: { lang: string } }) {
   };
 
   // 지원하지 않는 언어인 경우 기본값으로 한국어 사용
-  const lang =
-    params.lang === "ko" || params.lang === "en" ? params.lang : "ko";
-  const t = translations[lang as keyof typeof translations];
+  const selectedLang = lang === "ko" || lang === "en" ? lang : "ko";
+  //lang 이 "ko"나 "en"이 아닐 경우에도 fallback "ko"를 기준으로 번역합니다
+  const t = translations[selectedLang as keyof typeof translations];
 
   return (
     <div className="mx-auto max-w-4xl p-6">
@@ -27,14 +34,14 @@ export default function TestPage({ params }: { params: { lang: string } }) {
 
       <div className="mb-6 rounded bg-gray-100 p-4 dark:bg-gray-800">
         <p>
-          <strong>{t.languageInfo}:</strong> {params.lang}
+          <strong>{t.languageInfo}:</strong> {selectedLang}
         </p>
       </div>
 
       <div className="flex items-center space-x-3">
         {/* 같은 언어로 홈페이지로 이동하는 링크 */}
         <a
-          href={`/${params.lang}`}
+          href={`/${selectedLang}`}
           className="rounded bg-blue-500 px-4 py-2 text-white hover:bg-blue-600"
         >
           {t.backToHome}
@@ -42,10 +49,10 @@ export default function TestPage({ params }: { params: { lang: string } }) {
 
         {/* 다른 언어로 현재 페이지를 보는 링크 */}
         <a
-          href={`/${params.lang === "ko" ? "en" : "ko"}/test`}
+          href={`/${selectedLang === "ko" ? "en" : "ko"}/test`}
           className="rounded bg-gray-500 px-4 py-2 text-white hover:bg-gray-600"
         >
-          {params.lang === "ko" ? "English" : "한국어"}
+          {selectedLang === "ko" ? "English" : "한국어"}
         </a>
       </div>
     </div>
