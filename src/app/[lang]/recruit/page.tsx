@@ -46,6 +46,7 @@ export default function Recruit() {
       <div className="mb-6">
         <h1 className="text-2xl font-bold">모임 만들기</h1>
       </div>
+
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
           <FormField
@@ -61,6 +62,7 @@ export default function Recruit() {
               </FormItem>
             )}
           />
+
           <FormField
             control={form.control}
             name="groupLocation"
@@ -74,6 +76,7 @@ export default function Recruit() {
               </FormItem>
             )}
           />
+
           <FormField
             control={form.control}
             name="groupHeadcount"
@@ -92,7 +95,7 @@ export default function Recruit() {
               </FormItem>
             )}
           />
-          // Update the FormField for meeting time
+
           <FormField
             control={form.control}
             name="meetingTime"
@@ -109,6 +112,7 @@ export default function Recruit() {
               </FormItem>
             )}
           />
+
           <div className="mt-6 flex justify-end">
             <Button type="submit">저장하기</Button>
           </div>
